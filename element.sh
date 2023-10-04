@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# creating psql variable with -c argument to pass queries
 PSQL="psql -X -A -U freecodecamp -d periodic_table --tuples-only -c"
 
 if [[ ! $1 ]] 
@@ -9,11 +9,9 @@ else
   re='^[0-9]+$'
   if [[ $1 =~ $re ]]
   then
-    # echo It\'s a number
     SEL_ELEMENT=$($PSQL "select * from elements join properties\
     using(atomic_number) join types using (type_id) where atomic_number=$1;")
   else
-    # echo It\'s a varchar
     SEL_ELEMENT=$($PSQL "select * from elements join properties\
     using(atomic_number) join types using (type_id) where symbol='$1' or name='$1';")
   fi
